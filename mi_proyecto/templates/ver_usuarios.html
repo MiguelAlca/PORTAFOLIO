@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Registrados</title>
+</head>
+<body>
+    <h1>Lista de Usuarios Registrados</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre de Usuario</th>
+            <th>Rol</th>
+        </tr>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.rol }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
