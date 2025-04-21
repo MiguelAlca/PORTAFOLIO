@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Inventario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Gestión de Inventario</h1>
+    
+    <!-- Estadísticas del inventario -->
+    <div class="estadisticas">
+        <p>Total de productos registrados: <strong>{{ total_productos }}</strong></p>
+        <p>Valor total del inventario: <strong>${{ total_valor_inventario }}</strong></p>
+    </div>
+    
+    <!-- Tabla de productos -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Valor Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>${{ producto.precio }}</td>
+                <td>${{ producto.cantidad * producto.precio }}</td>
+                <td>
+                    <input type="number" class="cantidad-eliminar" data-id="{{ producto.id }}" placeholder="Cantidad" min="0">
+                    <button class="eliminar-btn" data-id="{{ producto.id }}">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Formulario para agregar productos -->
+    <form action="/productos" method="POST" onsubmit="return validateForm()">
+        <input type="text" name="nombre" placeholder="Nombre del producto" required>
+        <input type="number" name="cantidad" placeholder="Cantidad" min="0" required>
+        <input type="number" name="precio" placeholder="Precio" step="0.01" min="0" required>
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <!-- Barra de búsqueda -->
+    <div>
+        <input type="text" id="search" placeholder="Buscar producto...">
+        <button onclick="searchProduct()">Buscar</button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        // Función para eliminar productos
+        document.querySelectorAll('.eliminar-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                let confirmDelete = confirm("¿Estás seguro de que deseas eliminar este producto?");
+                if (confirmDelete) {
+                    showLoading();
+                    let id = this.getAttribute('data-id');
+                    let cantidadInput = document.querySelector(`.cantidad-eliminar[data-id='${id}']`);
+                    let cantidad = cantidadInput.value || 0;
+
+                    fetch(`/productos/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ cantidad: parseInt(cantidad) })
+                    })
+                    .then(response => {
+                        hideLoading();
+                        if (!response.ok) {
+                            throw new Error('Error en la solicitud');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert(data.mensaje + " Reducción de precio: $" + data.precio_reduccion);
+                        location.reload();
+                    })
+                    .catch(error => {
+                        hideLoading();
+                        alert("Error: " + error.message);
+                    });
+                }
+            });
+        });
+
+        // Función para validar el formulario
+        function validateForm() {
+            let nombre = document.querySelector('input[name="nombre"]').value;
+            let cantidad = document.querySelector('input[name="cantidad"]').value;
+            let precio = document.querySelector('input[name="precio"]').value;
+
+            if (nombre.trim() === "" || cantidad <= 0 || precio <= 0) {
+                alert("Por favor, complete todos los campos correctamente.");
+                return false;
+            }
+            return true;
+        }
+
+        // Función para buscar productos
+        function searchProduct() {
+            let searchTerm = document.getElementById('search').value.toLowerCase();
+            let rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(row => {
+                let nombre = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                let id = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                if (nombre.includes(searchTerm) || id.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Funciones para mostrar/ocultar el loading spinner
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
