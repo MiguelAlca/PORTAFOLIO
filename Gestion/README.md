@@ -1,21 +1,21 @@
 
 ---
 
-# 📁 `Gestion/README.md`
+## 📁 `Gestion/README.md`
 
 ```markdown
-# 📦 Sistema de Gestión de Inventario
+## 📦 Sistema de Gestión de Inventario
 
 Proyecto que permite el control básico de productos en un inventario con una interfaz simple, rápida y funcional.
 
-# 🧰 Tecnologías utilizadas
+## 🧰 Tecnologías utilizadas
 
 - Python
 - HTML
 - JavaScript
 - SQLite3
 
-# 🧾 Características principales
+## 🧾 Características principales
 
 - Registro de productos con:
   - Nombre
@@ -27,7 +27,7 @@ Proyecto que permite el control básico de productos en un inventario con una in
 - Opción para eliminar productos del sistema.
 - Interfaz sencilla y optimizada para usuarios sin experiencia técnica.
 
-# 🚀 Cómo ejecutar
+## 🚀 Cómo ejecutar
 
 1. Clona el repositorio:
    ```bash
