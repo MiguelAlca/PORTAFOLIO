@@ -10,4 +10,4 @@ Aplicación web de transporte con sistema de roles (Administrador y Moderador). 
 ## 📦 Gestión de Inventario
 Sistema para registrar, visualizar, buscar y eliminar productos de un inventario. Usé Python, HTML, JavaScript y SQLite3. 
 
-🔗 [Ver más](./GestionInventario/README.md)
+🔗 [Ver más](./Gestion/README.md)
