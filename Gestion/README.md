@@ -1,9 +1,4 @@
 
----
-
-## 📁 `Gestion/README.md`
-
-```markdown
 ## 📦 Sistema de Gestión de Inventario
 
 Proyecto que permite el control básico de productos en un inventario con una interfaz simple, rápida y funcional.
@@ -32,4 +27,4 @@ Proyecto que permite el control básico de productos en un inventario con una in
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/tuusuario/portafolio.git
-   cd GestionInventario
+   cd Gestion
