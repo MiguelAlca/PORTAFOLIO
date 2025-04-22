@@ -21,6 +21,8 @@ Aplicación web desarrollada para la gestión de transporte de carga y personal,
   - Rutas
 - Base de datos integrada para gestión de contenido.
 - Interfaz responsiva con diseño limpio.
+# Ocupa Una API De Google Cloud Para Habilitar Las Funciones de Navegacion
+esto se hace en el ruta.html
 
 # 🚀 Cómo ejecutar
 
